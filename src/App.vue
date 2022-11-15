@@ -8,7 +8,7 @@
 		<hr />
 		<TodoList
 			v-for="note in getTodos"
-			v-bind:key="note.id"
+			:key="note.id"
 			:note="note"
 			@removeTodo="removeTodo"
 			@markComplete="markComplete"
@@ -16,45 +16,29 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import TodoList from "@/components/TodoList.vue";
 import { useCounterStore } from "@/store/store";
 import { storeToRefs } from "pinia";
-import { defineComponent } from "vue";
+import { onMounted, ref } from "vue";
 
-export default defineComponent({
-	data() {
-		return {
-			text: "",
-		};
-	},
-	methods: {
-		onSubmit() {
-			if (this.text !== "") {
-				this.addNewTodo(this.text);
-				this.text = "";
-			}
-		},
-	},
-	mounted() {
-		this.getDataFromServer();
-	},
-	components: { TodoList },
-	setup() {
-		const store = useCounterStore();
-		const { getTodos } = storeToRefs(store);
-		const { addNewTodo, removeTodo, markComplete } = store;
-		const { getDataFromServer } = store;
+const text = ref('');
 
-		return {
-			getTodos,
-			addNewTodo,
-			removeTodo,
-			markComplete,
-			getDataFromServer,
-		};
-	},
+const onSubmit = () => {
+	if (text.value !== '') {
+		addNewTodo(text.value);
+		text.value = '';
+	}
+};
+
+onMounted(() => {
+	getDataFromServer();
 });
+
+const store = useCounterStore();
+const { getTodos } = storeToRefs(store);
+const { addNewTodo, removeTodo, markComplete } = store;
+const { getDataFromServer } = store;
 </script>
 
 <style scoped>

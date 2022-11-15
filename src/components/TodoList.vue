@@ -6,13 +6,13 @@
 					<!-- inboxes true/false -->
 					<input
 						type="checkbox"
-						v-on:change="inboxChange(note.id)"
+						@change="inboxChange(note.id)"
 						v-if="note.completed"
 						checked
 					/>
-					<input 
+					<input
 						type="checkbox" 
-						v-on:change="inboxChange(note.id)" 
+						@change="inboxChange(note.id)" 
 						v-else 
 					/>
 					<!-- note number -->
@@ -23,7 +23,7 @@
 					{{ note.title }}
 				</span>
 				<!-- delete note button -->
-				<button class="button" v-on:click="$emit('remove-todo', note.id)">
+				<button class="button" @click="removeTodo(note.id)">
 					&times;
 				</button>
 			</li>
@@ -31,18 +31,30 @@
 	</div>
 </template>
 
-<script lang="ts">
-export default {
-	props: ["note"],
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
 
-	methods: {
-		removeTodo(id: number) {
-			this.$emit("remove-todo", id);
-		},
-		inboxChange(id: number) {
-			this.$emit("markComplete", id);
-		},
-	},
+defineProps<{
+	note: Note;
+}>();
+
+type Note = {
+	userId: number;
+	id: number;
+	title: string;
+	completed: boolean;
+};
+
+const emit = defineEmits<{
+	(e: 'remove-todo', id: number): void,
+	(e: 'mark-complete', id: number): void,
+}>();
+
+const removeTodo = (id: number) => {
+	emit('remove-todo', id);
+};
+const inboxChange = (id: number) => {
+	emit('mark-complete', id);
 };
 </script>
 
