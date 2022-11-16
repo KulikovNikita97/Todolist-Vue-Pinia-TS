@@ -6,19 +6,21 @@
 			<button type="submit">Create</button>
 		</form>
 		<hr />
-		<TodoList
-			v-for="(note, index) in store.todos"
-			:key="note.id"
-			:note="note"
-			:index="index + 1"
-			@removeTodo="removeTodo"
-			@markComplete="markComplete"
-		/>
+		<ul class="todo-list">
+			<li v-for="(note, index) in store.todos" :key="note.id">
+				<TodoItem
+					:note="note"
+					:index="index + 1"
+					@removeTodo="removeTodo"
+					@markComplete="markComplete"
+				/>
+			</li>
+		</ul>
 	</div>
 </template>
 
 <script setup lang="ts">
-import TodoList from "@/components/TodoList.vue";
+import TodoItem from "@/components/TodoItem.vue";
 import { useTodoListStore } from "@/store/todoList";
 import { onMounted, ref } from "vue";
 
@@ -58,5 +60,11 @@ const { getDataFromServer } = store;
 
 .app__input {
 	width: 400px;
+}
+
+.todo-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 </style>

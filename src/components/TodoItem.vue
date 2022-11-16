@@ -1,30 +1,18 @@
 <template>
-	<div>
-		<ul class="todo-list">
-			<li class="todo-list__item" :class="{ 'todo-list__item--completed': note.completed }">
-				<span>
-					<input
-						type="checkbox"
-						@change="inboxChange(note.id)"
-						v-if="note.completed"
-						checked
-						class="todo-list__checkbox"
-					/>
-					<input
-						type="checkbox" 
-						@change="inboxChange(note.id)" 
-						v-else
-						class="todo-list__checkbox"
-					/>
-					<strong>{{ index }}</strong>
-					{{ note.title }}
-				</span>
-				<!-- delete note button -->
-				<button class="todo-list__delete" @click="removeTodo(note.id)">
-					&times;
-				</button>
-			</li>
-		</ul>
+	<div class="todo-item" :class="{ 'todo-item--completed': note.completed }">
+		<span>
+			<input
+				class="todo-item__checkbox"
+				type="checkbox"
+				:checked="note.completed"
+				@change.prevent="inboxChange(note.id)"
+			/>
+			<strong class="todo-item__index">{{ index }}</strong>
+			<span class="todo-item__text">{{ note.title }}</span>
+		</span>
+		<button class="todo-item__delete" @click="removeTodo(note.id)">
+			&times;
+		</button>
 	</div>
 </template>
 
@@ -57,13 +45,7 @@ const inboxChange = (id: number) => {
 </script>
 
 <style>
-.todo-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.todo-list__item {
+.todo-item {
 	border: 1px solid #ccc;
 	display: flex;
 	justify-content: space-between;
@@ -71,11 +53,15 @@ const inboxChange = (id: number) => {
 	margin-bottom: 1rem;
 }
 
-.todo-list__item--completed {
+.todo-item--completed .todo-item__text {
 	text-decoration: line-through;
 }
 
-.todo-list__delete {
+.todo-item__index::after {
+	content: ' ';
+}
+
+.todo-item__delete {
 	background: orangered;
 	color: #fff;
 	border-radius: 50%;
@@ -85,7 +71,7 @@ const inboxChange = (id: number) => {
 	margin: auto 0 auto 2rem;
 }
 
-.todo-list__checkbox {
+.todo-item__checkbox {
 	margin: auto 2rem auto 0;
 }
 </style>
