@@ -7,9 +7,10 @@
 		</form>
 		<hr />
 		<TodoList
-			v-for="note in getTodos"
+			v-for="(note, index) in store.todos"
 			:key="note.id"
 			:note="note"
+			:index="index + 1"
 			@removeTodo="removeTodo"
 			@markComplete="markComplete"
 		/>
@@ -18,8 +19,7 @@
 
 <script setup lang="ts">
 import TodoList from "@/components/TodoList.vue";
-import { useCounterStore } from "@/store/store";
-import { storeToRefs } from "pinia";
+import { useTodoListStore } from "@/store/todoList";
 import { onMounted, ref } from "vue";
 
 const text = ref('');
@@ -31,12 +31,11 @@ const onSubmit = () => {
 	}
 };
 
-onMounted(() => {
-	getDataFromServer();
+onMounted(async () => {
+	await getDataFromServer();
 });
 
-const store = useCounterStore();
-const { getTodos } = storeToRefs(store);
+const store = useTodoListStore();
 const { addNewTodo, removeTodo, markComplete } = store;
 const { getDataFromServer } = store;
 </script>

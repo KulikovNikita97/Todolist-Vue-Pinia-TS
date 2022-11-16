@@ -17,7 +17,7 @@
 					/>
 					<!-- note number -->
 					<strong>
-						{{ note.id }}
+						{{ index }}
 					</strong>
 					<!-- note text -->
 					{{ note.title }}
@@ -36,6 +36,7 @@ import { defineProps, defineEmits } from 'vue';
 
 defineProps<{
 	note: Note;
+	index: number;
 }>();
 
 type Note = {
