@@ -1,29 +1,26 @@
 <template>
 	<div>
-		<ul>
-			<li>
-				<span v-bind:class="{ done: note.completed }">
-					<!-- inboxes true/false -->
+		<ul class="todo-list">
+			<li class="todo-list__item" :class="{ 'todo-list__item--completed': note.completed }">
+				<span>
 					<input
 						type="checkbox"
 						@change="inboxChange(note.id)"
 						v-if="note.completed"
 						checked
+						class="todo-list__checkbox"
 					/>
 					<input
 						type="checkbox" 
 						@change="inboxChange(note.id)" 
-						v-else 
+						v-else
+						class="todo-list__checkbox"
 					/>
-					<!-- note number -->
-					<strong>
-						{{ index }}
-					</strong>
-					<!-- note text -->
+					<strong>{{ index }}</strong>
 					{{ note.title }}
 				</span>
 				<!-- delete note button -->
-				<button class="button" @click="removeTodo(note.id)">
+				<button class="todo-list__delete" @click="removeTodo(note.id)">
 					&times;
 				</button>
 			</li>
@@ -59,14 +56,14 @@ const inboxChange = (id: number) => {
 };
 </script>
 
-<style scoped>
-ul {
+<style>
+.todo-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-li {
+.todo-list__item {
 	border: 1px solid #ccc;
 	display: flex;
 	justify-content: space-between;
@@ -74,7 +71,11 @@ li {
 	margin-bottom: 1rem;
 }
 
-.button {
+.todo-list__item--completed {
+	text-decoration: line-through;
+}
+
+.todo-list__delete {
 	background: orangered;
 	color: #fff;
 	border-radius: 50%;
@@ -84,11 +85,7 @@ li {
 	margin: auto 0 auto 2rem;
 }
 
-input {
+.todo-list__checkbox {
 	margin: auto 2rem auto 0;
-}
-
-.done {
-	text-decoration: line-through;
 }
 </style>

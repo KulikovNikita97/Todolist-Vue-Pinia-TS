@@ -1,8 +1,8 @@
 <template>
-	<div id="app">
+	<div class="app">
 		<h1>Notes</h1>
-		<form @submit.prevent="onSubmit">
-			<input type="text" placeholder="insert your text" v-model="text" />
+		<form class="app__form" @submit.prevent="onSubmit">
+			<input class="app__input" type="text" placeholder="insert your text" v-model="text" />
 			<button type="submit">Create</button>
 		</form>
 		<hr />
@@ -40,23 +40,23 @@ const { addNewTodo, removeTodo, markComplete } = store;
 const { getDataFromServer } = store;
 </script>
 
-<style scoped>
-#app {
+<style>
+.app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
+	padding-top: 60px;
 }
 
-form {
+.app__form {
 	display: flex;
 	justify-content: center;
 	padding-bottom: 1rem;
 }
 
-input {
+.app__input {
 	width: 400px;
 }
 </style>
